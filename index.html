@@ -15,7 +15,7 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* Fade Animation */
+/* Animation */
 
 .fade{
 opacity:0;
@@ -24,10 +24,7 @@ animation:fadeUp 1s forwards;
 }
 
 @keyframes fadeUp{
-to{
-opacity:1;
-transform:translateY(0);
-}
+to{opacity:1;transform:translateY(0);}
 }
 
 /* Hero */
@@ -126,11 +123,6 @@ display:inline-block;
 width:100%;
 border-radius:15px;
 margin-top:20px;
-transition:0.4s;
-}
-
-.preview-img:hover{
-transform:scale(1.05);
 }
 
 .watermark{
@@ -142,10 +134,52 @@ font-size:45px;
 color:rgba(255,215,0,0.35);
 font-weight:bold;
 pointer-events:none;
-letter-spacing:5px;
 }
 
-/* Footer */
+/* Live Sales */
+
+.live-sale{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#1a1a1a;
+padding:12px 18px;
+border-radius:12px;
+box-shadow:0 0 15px rgba(255,215,0,0.5);
+font-size:14px;
+display:none;
+z-index:999;
+}
+
+/* Urgency Popup */
+
+.popup{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#111;
+padding:30px;
+border-radius:15px;
+box-shadow:0 0 25px rgba(255,215,0,0.6);
+text-align:center;
+display:none;
+z-index:1000;
+}
+
+.popup h3{
+color:#FFD700;
+}
+
+.popup button{
+margin-top:15px;
+padding:10px 25px;
+border:none;
+background:#FFD700;
+color:black;
+border-radius:20px;
+cursor:pointer;
+}
 
 .footer{
 margin:50px;
@@ -167,11 +201,13 @@ color:#aaa;
 <div class="old-price">₹199</div>
 <div class="price">Special Launch Price ₹49</div>
 
-<div class="timer">Offer Ends In: <span id="countdown"></span></div>
+<div class="timer">
+Offer Ends In: <span id="countdown"></span>
+</div>
 
 <br>
 
-<button class="btn" onclick="payUPI()">Pay with UPI</button>
+<button class="btn" onclick="payNow()">Pay with UPI</button>
 
 <button class="btn" onclick="shareLink()">Share on WhatsApp</button>
 
@@ -203,10 +239,6 @@ color:#aaa;
 
 </div>
 
-<p style="color:#aaa;font-size:14px;margin-top:15px;">
-This is a preview version. Full HD printable PDF will be delivered after payment confirmation.
-</p>
-
 </div>
 
 <div class="card">
@@ -215,7 +247,6 @@ This is a preview version. Full HD printable PDF will be delivered after payment
 
 <p>“I stayed consistent for 30 days straight!”</p>
 <p>“Simple but life-changing.”</p>
-<p>“Best ₹49 I invested in myself.”</p>
 
 </div>
 
@@ -233,23 +264,35 @@ This is a preview version. Full HD printable PDF will be delivered after payment
 
 </div>
 
+<div class="live-sale" id="liveSale"></div>
+
+<div class="popup" id="urgencyPopup">
+
+<h3>⚡ Limited Offer</h3>
+
+<p>Only few Habit Trackers left at ₹49!</p>
+
+<button onclick="closePopup()">Get It Now</button>
+
+</div>
+
 <div class="footer">
+
 Secure UPI Payment | © 2026 Moomin
+
 </div>
 
 <script>
 
-/* UPI PAYMENT */
+/* Payment */
 
-function payUPI(){
+function payNow(){
 
-var upi="upi://pay?pa=moominmuneer804@okicici&pn=Moomin%20Ul%20Muneer&am=49&cu=INR&tn=Habit%20Tracker";
-
-window.location.href=upi;
+window.location.href="upi://pay?pa=moominmuneer804@okicici&pn=Moomin%20Ul%20Muneer&am=49&cu=INR&tn=Habit%20Tracker";
 
 }
 
-/* SHARE */
+/* Share */
 
 function shareLink(){
 
@@ -259,7 +302,7 @@ window.open("https://wa.me/?text="+encodeURIComponent(text));
 
 }
 
-/* SEND SCREENSHOT */
+/* Screenshot */
 
 function sendScreenshot(){
 
@@ -269,7 +312,7 @@ window.open("https://wa.me/919906778854?text="+encodeURIComponent(text));
 
 }
 
-/* COUNTDOWN */
+/* Countdown */
 
 var countDownDate=new Date();
 
@@ -282,12 +325,11 @@ var now=new Date().getTime();
 var distance=countDownDate-now;
 
 var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
-
 var minutes=Math.floor((distance%(1000*60*60))/(1000*60));
-
 var seconds=Math.floor((distance%(1000*60))/1000);
 
-document.getElementById("countdown").innerHTML=hours+"h "+minutes+"m "+seconds+"s ";
+document.getElementById("countdown").innerHTML=
+hours+"h "+minutes+"m "+seconds+"s ";
 
 if(distance<0){
 
@@ -298,6 +340,46 @@ document.getElementById("countdown").innerHTML="Offer Expired";
 }
 
 },1000);
+
+/* Live Sales */
+
+var names=[
+"Arjun","Rahul","Ayaan","Aman","Faizan","Rohan","Sameer","Aditya"
+];
+
+function showSale(){
+
+var name=names[Math.floor(Math.random()*names.length)];
+
+var box=document.getElementById("liveSale");
+
+box.innerHTML="🔥 "+name+" purchased the Habit Tracker";
+
+box.style.display="block";
+
+setTimeout(function(){
+
+box.style.display="none";
+
+},4000);
+
+}
+
+setInterval(showSale,8000);
+
+/* Urgency Popup */
+
+setTimeout(function(){
+
+document.getElementById("urgencyPopup").style.display="block";
+
+},15000);
+
+function closePopup(){
+
+document.getElementById("urgencyPopup").style.display="none";
+
+}
 
 </script>
 
