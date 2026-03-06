@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
 body{
 margin:0;
 font-family:'Segoe UI',sans-serif;
@@ -14,7 +15,8 @@ text-align:center;
 overflow-x:hidden;
 }
 
-/* Smooth Fade */
+/* Fade Animation */
+
 .fade{
 opacity:0;
 transform:translateY(40px);
@@ -29,6 +31,7 @@ transform:translateY(0);
 }
 
 /* Hero */
+
 .hero{
 padding:90px 20px;
 background:linear-gradient(180deg,#000,#111);
@@ -54,6 +57,7 @@ font-size:18px;
 }
 
 /* Timer */
+
 .timer{
 background:#FFD700;
 color:black;
@@ -65,6 +69,7 @@ margin-top:10px;
 }
 
 /* Buttons */
+
 .btn{
 background:#FFD700;
 color:black;
@@ -84,6 +89,7 @@ box-shadow:0 0 35px #FFD700;
 }
 
 /* Sections */
+
 .section{
 max-width:700px;
 margin:60px auto;
@@ -110,6 +116,7 @@ margin-bottom:15px;
 }
 
 /* Preview */
+
 .preview-container{
 position:relative;
 display:inline-block;
@@ -139,68 +146,89 @@ letter-spacing:5px;
 }
 
 /* Footer */
+
 .footer{
 margin:50px;
 font-size:14px;
 color:#aaa;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="hero fade">
+
 <h1>🔥 30 Day Habit Tracker</h1>
+
 <p style="color:#ccc;">Build Discipline. Stay Consistent. Transform Your Life.</p>
 
 <div class="old-price">₹199</div>
 <div class="price">Special Launch Price ₹49</div>
 
 <div class="timer">Offer Ends In: <span id="countdown"></span></div>
+
 <br>
 
-<button class="btn" onclick="payNow()">Pay with UPI</button>
+<button class="btn" onclick="payUPI()">Pay with UPI</button>
+
 <button class="btn" onclick="shareLink()">Share on WhatsApp</button>
+
 </div>
 
 <div class="section fade">
 
 <div class="card">
+
 <h2>📋 What You Get</h2>
+
 <p>✔ 30 Day Tracking Sheet</p>
 <p>✔ Printable High Quality PDF</p>
 <p>✔ Minimal & Clean Design</p>
 <p>✔ Boosts Focus & Discipline</p>
 <p>✔ Daily Accountability System</p>
+
 </div>
 
 <div class="card">
+
 <h2>👀 Preview Before Payment</h2>
 
 <div class="preview-container">
-<img src="tracker-preview.jpg" class="preview-img" alt="Habit Tracker Preview">
+
+<img src="tracker-preview.jpg" class="preview-img">
+
 <div class="watermark">SAMPLE</div>
+
 </div>
 
-<p style="color:#aaa; font-size:14px; margin-top:15px;">
+<p style="color:#aaa;font-size:14px;margin-top:15px;">
 This is a preview version. Full HD printable PDF will be delivered after payment confirmation.
 </p>
 
 </div>
 
 <div class="card">
+
 <h2>⭐ Testimonials</h2>
+
 <p>“I stayed consistent for 30 days straight!”</p>
 <p>“Simple but life-changing.”</p>
 <p>“Best ₹49 I invested in myself.”</p>
+
 </div>
 
 <div class="card">
+
 <h2>📸 After Payment Process</h2>
+
 <p>1️⃣ Complete UPI Payment</p>
 <p>2️⃣ Take Screenshot</p>
 <p>3️⃣ Send Screenshot on WhatsApp</p>
+
 <button class="btn" onclick="sendScreenshot()">Send Screenshot</button>
+
 </div>
 
 </div>
@@ -210,40 +238,67 @@ Secure UPI Payment | © 2026 Moomin
 </div>
 
 <script>
-function payNow(){
-window.location.href="upi://pay?pa=moominmuneer804@okicici&pn=Moomin&am=49&cu=INR";
+
+/* UPI PAYMENT */
+
+function payUPI(){
+
+var upi="upi://pay?pa=moominmuneer804@okicici&pn=Moomin%20Ul%20Muneer&am=49&cu=INR&tn=Habit%20Tracker";
+
+window.location.href=upi;
+
 }
+
+/* SHARE */
 
 function shareLink(){
+
 var text="🔥 Check out this powerful 30 Day Habit Tracker for just ₹49!";
+
 window.open("https://wa.me/?text="+encodeURIComponent(text));
+
 }
+
+/* SEND SCREENSHOT */
 
 function sendScreenshot(){
+
 var text="Hi, I have completed the payment for the Habit Tracker. Sharing screenshot here.";
+
 window.open("https://wa.me/919906778854?text="+encodeURIComponent(text));
+
 }
 
-/* 24 Hour Countdown */
-var countDownDate = new Date();
-countDownDate.setHours(countDownDate.getHours() + 24);
+/* COUNTDOWN */
 
-var x = setInterval(function() {
-var now = new Date().getTime();
-var distance = countDownDate - now;
+var countDownDate=new Date();
 
-var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+countDownDate.setHours(countDownDate.getHours()+24);
 
-document.getElementById("countdown").innerHTML =
-hours + "h " + minutes + "m " + seconds + "s ";
+var x=setInterval(function(){
 
-if (distance < 0) {
+var now=new Date().getTime();
+
+var distance=countDownDate-now;
+
+var hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+
+var minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+
+var seconds=Math.floor((distance%(1000*60))/1000);
+
+document.getElementById("countdown").innerHTML=hours+"h "+minutes+"m "+seconds+"s ";
+
+if(distance<0){
+
 clearInterval(x);
-document.getElementById("countdown").innerHTML = "Offer Expired";
+
+document.getElementById("countdown").innerHTML="Offer Expired";
+
 }
-}, 1000);
+
+},1000);
+
 </script>
 
 </body>
